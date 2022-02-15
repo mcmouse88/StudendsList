@@ -1,14 +1,14 @@
 package com.company;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 import java.util.Scanner;
+import java.util.HashSet;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Map<Integer, Student> studentsList = new HashMap<>();
+        Set<Student> studentsList = new HashSet<>();
         while (true) {
             System.out.println("Введите информацию о студенте (для завершения работы программы введите \"end\")");
             String input = scan.nextLine();
@@ -17,9 +17,7 @@ public class Main {
             }
             String[] parts = input.split(", ");
             try {
-                if (!studentsList.containsKey(Integer.parseInt(parts[2]))) {
-                    studentsList.put(Integer.parseInt(parts[2]), new Student(parts[0], parts[1], Integer.parseInt(parts[2])));
-                } else {
+                if (!studentsList.add(new Student(parts[0], parts[1], Integer.parseInt(parts[2])))) {
                     System.out.println("Проверьте правильность ввода студенческого билета, такой билет уже существует");
                 }
             } catch (RuntimeException e) {
@@ -27,8 +25,8 @@ public class Main {
                 System.out.println("Введите данные в формате \"Иванов Петр Николаевич, 1243-Б, 31231343\"");
             }
         }
-        for (Student student : studentsList.values()) {
-            System.out.println(student);
+        for (Student targetStudent : studentsList) {
+            System.out.println(targetStudent);
         }
     }
 }
